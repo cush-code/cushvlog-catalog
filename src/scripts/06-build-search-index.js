@@ -7,14 +7,18 @@ import fs from 'fs'
 import lunr from 'lunr'
 
 // Load videos.json
-const videosJSON = JSON.parse(fs.readFileSync('scripts/output/videos.json', 'utf-8'))
+const videosJSON = JSON.parse(fs.readFileSync('src/scripts/output/videos.json', 'utf-8'))
 const videoIds = videosJSON.map((video) => video.id)
 console.log(`Found ${videoIds.length} videos.`)
 
 // Load transcripts
 function loadTranscript(id) {
-  const rawTranscript = fs.readFileSync(`scripts/output/transcripts-md/${id}.md`, 'utf-8')
-  return rawTranscript
+  try {
+    const rawTranscript = fs.readFileSync(`src/scripts/output/transcripts-md/${id}.md`, 'utf-8')
+    return rawTranscript
+  } catch (e) {
+    console.log('Transcript not found for video:', id)
+  }
 }
 
 function getVideoById(id) {
@@ -58,5 +62,5 @@ const buildSearchIndex = async function () {
 await buildSearchIndex()
 
 console.log('exporting search index...')
-fs.writeFileSync('src/assets/search-index.json', JSON.stringify(idx))
+fs.writeFileSync('src/scripts/output/search-index.json', JSON.stringify(idx))
 console.log('Done creating search index.')

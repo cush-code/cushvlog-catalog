@@ -26,7 +26,7 @@ function getParagraph(summary) {
 
 function formatSummary(videoId, summaryFile) {
   console.log('formatting summary', summaryFile)
-  const summaryRaw = fs.readFileSync(`./scripts/output/summaries-json/${summaryFile}`)
+  const summaryRaw = fs.readFileSync(`src/scripts/output/summaries-json/${summaryFile}`)
   const { summary, title } = JSON.parse(summaryRaw)
   if (!summary) {
     console.log(summary)
@@ -44,7 +44,7 @@ function formatSummary(videoId, summaryFile) {
 }
 
 async function epxortMd(videoId, content) {
-  fs.writeFile(`./scripts/output/summaries-md/${videoId}.md`, content, (err) => {
+  fs.writeFile(`src/scripts/output/summaries-md/${videoId}.md`, content, (err) => {
     if (err) {
       console.error('Error saving file', err)
     } else {
@@ -53,7 +53,9 @@ async function epxortMd(videoId, content) {
   })
 }
 
-const summaryFiles = fs.readdirSync('./scripts/output/summaries-json')
+const summaryFiles = fs.readdirSync('src/scripts/output/summaries-json')
+// Skip the first file as it's '.gitkeep'
+summaryFiles.shift()
 const videoIds = summaryFiles.map((file) => file.split('summary-')[1].split('.json')[0])
 
 for (let i = 0; i < videoIds.length; i++) {

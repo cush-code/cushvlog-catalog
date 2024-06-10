@@ -15,10 +15,10 @@ const VIDEOS_FILE = dotenv.config().parsed.VIDEOS_FILE
 
 const content = {
   summary: {
-    path: 'scripts/output/summaries-json'
+    path: 'src/scripts/output/summaries-json'
   },
   transcript: {
-    path: 'scripts/output/transcripts-json'
+    path: 'src/scripts/output/transcripts-json'
   }
 }
 

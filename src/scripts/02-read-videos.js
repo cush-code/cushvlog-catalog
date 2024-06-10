@@ -42,6 +42,8 @@ async function fetchVideoDetails(videoIds) {
   return videoDetails
 }
 
+console.log('Fetching video details...')
+
 const videoDetails = await fetchVideoDetails(videoIds)
   .then((response) => response)
   .catch((error) => {
@@ -51,3 +53,4 @@ const videoDetails = await fetchVideoDetails(videoIds)
 // Save video metadata to a JSON file
 const videoDetailsJSON = JSON.stringify(videoDetails, null, 2)
 fs.writeFileSync(VIDEOS_FILE, videoDetailsJSON)
+console.log(`Saved video details to ${VIDEOS_FILE}`)

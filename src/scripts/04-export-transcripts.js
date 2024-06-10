@@ -20,7 +20,7 @@ function getParagraph(part) {
 
 function formatTranscript(transcriptFile) {
   console.log('formatting transcript', transcriptFile)
-  const transcriptRaw = fs.readFileSync(`./scripts/output/transcripts-json/${transcriptFile}`)
+  const transcriptRaw = fs.readFileSync(`src/scripts/output/transcripts-json/${transcriptFile}`)
   const { transcript } = JSON.parse(transcriptRaw)
 
   if (!transcript) {
@@ -40,7 +40,7 @@ function formatTranscript(transcriptFile) {
 }
 
 async function epxortMd(videoId, content) {
-  fs.writeFile(`./scripts/output/transcripts-md/${videoId}.md`, content, (err) => {
+  fs.writeFile(`src/scripts/output/transcripts-md/${videoId}.md`, content, (err) => {
     if (err) {
       console.error('Error saving file', err)
     } else {
@@ -49,7 +49,9 @@ async function epxortMd(videoId, content) {
   })
 }
 
-const transcriptFiles = fs.readdirSync('./scripts/output/transcripts-json')
+const transcriptFiles = fs.readdirSync('src/scripts/output/transcripts-json')
+// Skip the first file as it's '.gitkeep'
+transcriptFiles.shift()
 const videoIds = transcriptFiles.map((file) => file.split('transcript-')[1].split('.json')[0])
 
 for (let i = 0; i < videoIds.length; i++) {
