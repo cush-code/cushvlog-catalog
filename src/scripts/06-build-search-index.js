@@ -1,14 +1,19 @@
+/**
+ * This script builds a search index for the videos and transcripts.
+ *
+ * The search index is built using the `lunr` library. The index is saved as a JSON file.
+ */
 import fs from 'fs'
 import lunr from 'lunr'
 
-// Load videos.json from 'src/assets/videos.json'
-const videosJSON = JSON.parse(fs.readFileSync('src/assets/videos.json', 'utf-8'))
+// Load videos.json
+const videosJSON = JSON.parse(fs.readFileSync('scripts/output/videos.json', 'utf-8'))
 const videoIds = videosJSON.map((video) => video.id)
 console.log(`Found ${videoIds.length} videos.`)
 
 // Load transcripts
 function loadTranscript(id) {
-  const rawTranscript = fs.readFileSync(`src/assets/transcripts/${id}.md`, 'utf-8')
+  const rawTranscript = fs.readFileSync(`scripts/output/transcripts-md/${id}.md`, 'utf-8')
   return rawTranscript
 }
 

@@ -150,3 +150,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Application specific
+src/scripts/output/
