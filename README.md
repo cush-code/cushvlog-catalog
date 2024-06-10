@@ -38,6 +38,8 @@ Each script is numbered to indicate the order in which they should be ran. The p
 
 The website assumes data files are located in the `src/assets` folder. By default, this repository includes them, but if you want to use it with other videos, you should follow the steps above to generate them.
 
+The local search system is built using [lunr](https://lunrjs.com/).
+
 1. In the root folder of this repo, run `yarn` to install dependencies.
 1. Run `yarn dev` and access `localhost:5173` on your browser to view the website.
 
