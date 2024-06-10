@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "lunr": "^2.3.9",
     "mark.js": "^8.11.1",
     "markdown-it": "^14.1.0",
