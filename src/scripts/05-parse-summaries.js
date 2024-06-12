@@ -54,8 +54,11 @@ async function epxortMd(videoId, content) {
 }
 
 const summaryFiles = fs.readdirSync('src/scripts/output/summaries-json')
-// Skip the first file as it's '.gitkeep'
-summaryFiles.shift()
+// Remove '.gitkeep. from the list of files
+const index = summaryFiles.indexOf('.gitkeep')
+if (index > -1) {
+  summaryFiles.splice(index, 1)
+}
 const videoIds = summaryFiles.map((file) => file.split('summary-')[1].split('.json')[0])
 
 for (let i = 0; i < videoIds.length; i++) {

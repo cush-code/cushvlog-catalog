@@ -31,8 +31,9 @@ Each script is numbered to indicate the order in which they should be ran. The p
 1. The next script needs to be ran twice, once for summaries and once for transcripts. This process can take a long time as we have to respect Eightify's API rate limit. Run `node src/scripts/03-get-ai-content.js summary` to save video summaries of all videos, then `node src/scripts/03-get-ai-content.js transcript` to get and save the transcripts. Resulting files are located at `src/scripts/output/summaries-json` and `src/scripts/output/transcripts-json` respectively.
 1. `node src/scripts/04-parse-transcripts.js` will read the transcript JSON files generated on the previous step and export its contents into plain `.md` files. Those files will be saved at `src/scripts/output/transcripts-md`.
 1. `node src/scripts/05-parse-summaries.js` will read the summary JSON files generated on step 03 and export its contents into plain `.md` files. Those files will be saved at `src/scripts/output/summaries-md`.
-1. `node src/scripts/06-build-search-index.js` will use `lunr` to build the search index using the `.md` files generated on the previous steps.
-1. `node src/scripts/07-copy-to-assets.js` will copy all `.md` files, `search-index.json` and `videos.json` to `src/assets` so they can be used by the website.
+1. `node src/scripts/06-cleanup-transcripts.js` will cleanup the transcript texts, removing "uh"s for example.
+1. `node src/scripts/07-build-search-index.js` will use `lunr` to build the search index using the `.md` files generated on the previous steps.
+1. `node src/scripts/08-copy-to-assets.js` will copy all `.md` files, `search-index.json` and `videos.json` to `src/assets` so they can be used by the website.
 
 ### Website
 
