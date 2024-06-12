@@ -13,9 +13,17 @@ function getPhrases(paragraph) {
   return `${text}`
 }
 
-function getParagraph(part) {
+function getParagraph(part, timing, videoId) {
   const paragraph = getPhrases(part)
-  return `${paragraph}\n`
+  const timingMinutes = Math.floor(timing / 60)
+  const timingSeconds = Math.floor(timing % 60)
+  // Pad minutes and seconds with an extra 0 if needed
+  const timingMinutesDisplay = timingMinutes < 10 ? `0${timingMinutes}` : timingMinutes
+  const timingSecondsDisplay = timingSeconds < 10 ? `0${timingSeconds}` : timingSeconds
+  // Create a link to the video with the timing
+  const timingLink = `https://youtu.be/${videoId}?t=${timingMinutesDisplay}m${timingSecondsDisplay}s`
+  const timingDisplay = `[${timingMinutesDisplay}:${timingSecondsDisplay}](${timingLink})`
+  return `${timingDisplay}\n\n${paragraph}\n`
 }
 
 function formatTranscript(transcriptFile) {
@@ -32,7 +40,8 @@ function formatTranscript(transcriptFile) {
 
   let allParagraphs = ``
   for (let i = 0; i < timings.length; i++) {
-    allParagraphs += getParagraph(parts[i], timings[i])
+    const videoId = transcriptFile.split('transcript-')[1].split('.json')[0]
+    allParagraphs += getParagraph(parts[i], timings[i], videoId)
   }
 
   const content = `${allParagraphs}`

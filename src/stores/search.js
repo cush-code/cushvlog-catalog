@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import lunr from 'lunr'
 import { useVideoStore } from '@/stores/video'
 
+const SEARCH_PREVIEW_LENGTH = 120
+
 export const useSearchStore = defineStore('search', () => {
   let idx
   let isLoadingSearchIndex = ref(false)
@@ -40,12 +42,16 @@ export const useSearchStore = defineStore('search', () => {
   const getResultFragment = function (videoId, query) {
     const videoStore = useVideoStore()
     const transcript = videoStore.getTranscriptById(videoId)
-    const lowerCaseTranscript = transcript.toLowerCase()
+    const cleanTranscript = transcript.replace(/\[.*\]\(.*\)/g, '')
+    const lowerCaseTranscript = cleanTranscript.toLowerCase()
+    // Remove links from the markdown before searching the string
     let indexFound = lowerCaseTranscript.indexOf(query.toLowerCase())
     if (indexFound === -1) {
       return null
     }
-    return `...${transcript.substring(indexFound - 100, indexFound + 100)}`
+    const startingEllipsis = indexFound > SEARCH_PREVIEW_LENGTH ? `...` : ''
+    const endingEllipsis = indexFound < cleanTranscript.length - SEARCH_PREVIEW_LENGTH ? `...` : ''
+    return `${startingEllipsis}${cleanTranscript.substring(indexFound - SEARCH_PREVIEW_LENGTH, indexFound + SEARCH_PREVIEW_LENGTH)}${endingEllipsis}`
   }
 
   return {
