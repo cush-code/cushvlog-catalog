@@ -19,6 +19,8 @@ function cleanupTranscript(transcriptFile) {
     .replace(/ Uh\./g, ' ')
     .replace(/uh/g, ' ')
     .replace(/Uh/g, ' ')
+    .replace(/ UH /g, ' ')
+    .replace(/UH\./g, ' ')
     // Replace multiple spaces with a single space
     .replace(/ +/g, ' ')
     // Replace multiple line breaks with two line breaks
